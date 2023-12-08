@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stopwatch</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+      margin-top: 50px;
+    }
+
+    #time {
+      font-size: 2em;
+    }
+
+    #controls {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="time">00:00:00</div>
+<div id="controls">
+  <button onclick="startStopwatch()">Start</button>
+  <button onclick="pauseStopwatch()">Pause</button>
+  <button onclick="resetStopwatch()">Reset</button>
+</div>
+
+<script>
+  let timer;
+  let seconds = 0;
+  let isRunning = false;
+
+  function startStopwatch() {
+    if (!isRunning) {
+      isRunning = true;
+      timer = setInterval(updateTime, 1000);
+    }
+  }
+
+  function pauseStopwatch() {
+    if (isRunning) {
+      isRunning = false;
+      clearInterval(timer);
+    }
+  }
+
+  function resetStopwatch() {
+    clearInterval(timer);
+    isRunning = false;
+    seconds = 0;
+    updateTime();
+  }
+
+  function updateTime() {
+    seconds++;
+    let hours = Math.floor(seconds / 3600);
+    let minutes = Math.floor((seconds % 3600) / 60);
+    let remainingSeconds = seconds % 60;
+
+    let formattedTime = `${pad(hours)}:${pad(minutes)}:${pad(remainingSeconds)}`;
+    document.getElementById('time').textContent = formattedTime;
+  }
+
+  function pad(value) {
+    return value.toString().padStart(2, '0');
+  }
+</script>
+
+</body>
+</html>
